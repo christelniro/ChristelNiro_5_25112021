@@ -1,6 +1,7 @@
+const { WSAENETUNREACH } = require('constants');
 const http = require('http');
 const app = require('./app');
-console.log('Node is installed!');
+
 const normalizePort = val => {
   const port = parseInt(val, 10);
 
@@ -43,3 +44,11 @@ server.on('listening', () => {
 });
 
 server.listen(port);
+
+const http = require('http');
+
+const server = http.createServer((req, res) => {
+    res.end('Voilà la réponse du serveur !');
+});
+
+server.listen(process.env.PORT || 3000);
