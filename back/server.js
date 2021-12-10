@@ -45,13 +45,3 @@ server.on('listening', () => {
 
 server.listen(port);
 
-const requete = new XMLHttpRequest
-const methodeHttp = 'Get'
-const url = ' http://localhost:3000/api/products'
-
-requete.open (methodeHttp, url)
-
-requete.onreadystatechange = function(){
-  console.log(requete.readyState)
-}
-requete.send()
