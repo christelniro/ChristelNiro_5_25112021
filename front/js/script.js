@@ -20,6 +20,7 @@
 //.then (response => response.json())
 //.then (jsonData => console.log(jsonData))
 
+//recuperation des articles
 async function tableau(){
     let response = await fetch('http://localhost:3000/api/products')
     return response.json();
