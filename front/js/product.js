@@ -113,7 +113,7 @@ console.log(optionsProduit);
 const popupConfirmation = () =>{
     if(window.confirm(`${article.name} option: ${choixForm} a bien été ajouté au panier
     Consultez le panier OK ou revenir à l'accueil Annuler`)){
-window.location.href = "confirmation.html";
+window.location.href = "cart.html";
     }else{
         window.location.href = "index.html";
     }
