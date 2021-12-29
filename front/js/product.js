@@ -1,58 +1,4 @@
-//récupérer les paramètres d’URL 
-// let str = window.location.href;
-// let url = new URL(str);
-// let idProduct = url.searchParams.get("id");
-// console.log(idProduct)
-
-// let produitData = []
-//récupérer les détails du produit et Récupération des articles de l'API
-
-    // const recuperationProduit = async () => {
-    //     await fetch(`http://localhost:3000/api/products/${idProduct}`)
-    //     .then((res) => res.json())
-    //     .then((promise) => {
-    //        produitData = promise;
-    //        console.log(produitData);
-    //    });
-    // }
-  
-    
-    //affichage des produits et Répartition des données de l'API dans le DOM
-
-    // const produitDisplay = async () => {
-    //    await recuperationProduit();
-
-    // document.getElementById("limitedWidthBlock").innerHTML = `<div id=item${produitData._id}>
-    // <img class="item__img" src="${produitData.imageUrl}" 
-    // alt="Photographie d'un canapé" ${produitData.name}/>
-    // <div class="item__content__titlePrice"></div>
-    // <h1 id="title"><${produitData.name}></h1>
-    // <p id="price"><!-- 42 --></span>€</p>
-    // `;
-    // };
-
-    
-//produitData();
-
-// (async function () {
-//     const idProduct = getArticleId()
-//     const produitData = await getProduitData(idProduct)
-//     displayArticle(produitData)
-    
-// })
-    
-//  function getproduitData(idProduct){
-//      return fetch ("http://localhost:3000/api/products/post/"+ idProduct)
-//      .then(function(httpBodyResponse) {
-//          return httpBodyResponse.json()
-//      })
-//      .then(function(article){
-//          return article
-//      })
-//      .catch(function(error){
-//          alert(error)
-//      })
-//  }   
+ 
 
 //récupérer les paramètres d’URL 
 let str = window.location.href;
@@ -65,6 +11,7 @@ const colorPicked = document.querySelector("#colors");
 const quantityPicked = document.querySelector("#quantity");
 
 getArticle();
+
 // Récupération des articles de l'API
 function getArticle() {
     fetch("http://localhost:3000/api/products/" + idProduct)
@@ -107,5 +54,48 @@ for (let colors of article.colors){
     productColors.value = colors;
     productColors.innerHTML = colors;
 }
-addtocart(article)
+addToCart(article);
 }
+
+
+//button
+
+
+//selection de l'id du formulaire
+const idForm = document.querySelector('#addToCart');
+console.log(idForm);
+
+
+
+//selection du bouton ajouter l'article du panier
+const btn_envoyerPanier = document.querySelector('#addToCart')
+console.log(btn_envoyerPanier);
+
+//ecouter le bouton et envoyer le panier
+btn_envoyerPanier.addEventListener("click", (event)=>{
+    event.preventDefault();
+    
+//choix de l'utulisateur
+const choixForm = colorPicked.value;
+const ChoixForm = quantityPicked.value;
+
+
+console.log(ChoixForm);
+
+
+//recuperer des valeurs du formulaire
+let optionsProduit = {
+    idProduit: idProduct,
+    couleurProduit: choixForm,
+    quantiteProduit: Number(ChoixForm),
+    nomProduit: article.name,
+    prixProduit: article.price / 100,
+    descriptionProduit: article.description,
+    imgProduit: idProduct.imageUrl,
+    altImgProduit: article.altTxt,
+}
+
+console.log(optionsProduit);
+});
+
+
