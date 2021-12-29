@@ -58,7 +58,7 @@ addToCart(article);
 }
 
 
-//button
+//--------------BOUTTON PANIER ----------------------
 
 
 //selection de l'id du formulaire
@@ -74,7 +74,7 @@ console.log(btn_envoyerPanier);
 //ecouter le bouton et envoyer le panier
 btn_envoyerPanier.addEventListener("click", (event)=>{
     event.preventDefault();
-    
+
 //choix de l'utulisateur
 const choixForm = colorPicked.value;
 const ChoixForm = quantityPicked.value;
@@ -96,6 +96,50 @@ let optionsProduit = {
 }
 
 console.log(optionsProduit);
-});
 
+
+//----------LOCAL STORAGE----
+
+
+//STOCKER LA RECUP DES VALEURS DU FORMULAIRE DS LE LS-----
+ //declaration
+
+ let produitEnrgDansLeLocaleStorage = JSON.parse(localStorage.getItem("produit"));
+ //Pour convertir les données au format json quis ont dans le local storage en obj js
+ console.log(produitEnrgDansLeLocaleStorage);
+
+
+ //fonction fenetre popup
+const popupConfirmation = () =>{
+    if(window.confirm(`${article.name} option: ${choixForm} a bien été ajouté au panier
+    Consultez le panier OK ou revenir à l'accueil Annuler`)){
+window.location.href = "confirmation.html";
+    }else{
+        window.location.href = "index.html";
+    }
+
+}
+
+ //s'il y a déja  des pdt dans le local storage 
+
+ if (produitEnrgDansLeLocaleStorage){
+    produitEnrgDansLeLocaleStorage.push(optionsProduit);
+    localStorage.setItem("produit", JSON.stringify(produitEnrgDansLeLocaleStorage));
+    console.log(produitEnrgDansLeLocaleStorage);
+popupConfirmation();
+ }
+
+ //si il n'y pas de pdt d'enrg dans le local storage
+ else{
+    produitEnrgDansLeLocaleStorage = [];
+    produitEnrgDansLeLocaleStorage.push(optionsProduit);
+localStorage.setItem("produit", JSON.stringify(produitEnrgDansLeLocaleStorage));
+    console.log(produitEnrgDansLeLocaleStorage);
+ }
+
+
+
+
+
+});
 
