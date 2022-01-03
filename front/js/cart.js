@@ -63,15 +63,16 @@ positionElement1.innerHTML = panierVide;
     for (let l = 0; l < btn_supprimer.length; l++){
         btn_supprimer[l].addEventListener("click" , (event) =>{
             event.preventDefault();
-
+//selection de l id du pdt qui va etre supprimer en cliquant sur le btn
             let id_selectionner_supression = produitEnrgDansLeLocaleStorage[l].idProduit;
             console.log("id_selectionner_supression");
             console.log(id_selectionner_supression);
-
+//av la methode filtre je selectionne les élements à garder et je sup l élement pi le btn su^^àa été cliqué
 produitEnrgDansLeLocaleStorage = produitEnrgDansLeLocaleStorage.filter(
     el => el.idProduit !== id_selectionner_supression);
 console.log(produitEnrgDansLeLocaleStorage);
-
+//envoi de la variable ds le local storage
+//la transformation en format JSON et l'envoyer ds la key pdt du localstorage
 localStorage.setItem("produit", JSON.stringify(produitEnrgDansLeLocaleStorage));
 
 //Alerte produit supprimé et refresh
@@ -81,3 +82,52 @@ location.reload();
 
         })
     }
+
+     // Récupération du total des quantités----------------------
+
+
+     //declaration de la variable pr pouvoir y mettre les prix ds le panier
+
+let prixTotalDuPanier = [];
+
+for (let m = 0; m < produitEnrgDansLeLocaleStorage.length; m++){
+    let prixProduitDansLePanier = produitEnrgDansLeLocaleStorage[m].prixProduit;
+// 
+    prixTotalDuPanier.push(prixProduitDansLePanier)
+
+    console.log(prixTotalDuPanier);
+}
+
+let quantiteTotalDupanier = [];
+
+for (let a = 0; a < produitEnrgDansLeLocaleStorage.length; a++){
+    let quantiteTotalDanslepanier = produitEnrgDansLeLocaleStorage[a].quantiteProduit;
+
+   quantiteTotalDupanier.push(quantiteTotalDanslepanier)
+
+    console.log(quantiteTotalDupanier);
+}
+
+
+//adddition des prix qu'il ya ds le tableau de la variable "prixtotalcal" av la methode .reduce
+    const reducer = (accumulator, currentValue) => accumulator + currentValue;
+    const prixTotal = prixTotalDuPanier.reduce(reducer);
+
+    console.log(prixTotal);
+
+    const reducere = (accumulator, currentValue) => accumulator + currentValue;
+    const quantiteProduit = quantiteTotalDupanier.reduce(reducere);
+
+    console.log(quantiteTotalDupanier);
+
+    //le code html du prix total à afficher
+
+    const affichePrixHtml = `
+    <div class="cart__price">
+              <p>Total (<span id="totalQuantity">${quantiteProduit}</span> articles) : <span id="totalPrice">${prixTotal}</span> €</p>
+            </div>
+    
+    `
+positionElement1.insertAdjacentHTML("beforeend", affichePrixHtml);
+
+

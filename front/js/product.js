@@ -89,7 +89,7 @@ let optionsProduit = {
     couleurProduit: choixForm,
     quantiteProduit: Number(ChoixForm),
     nomProduit: article.name,
-    prixProduit: article.price,
+    prixProduit: (article.price * ChoixForm),
     descriptionProduit: article.description,
     imgProduit: article.imageUrl,
     altImgProduit: article.altTxt,
