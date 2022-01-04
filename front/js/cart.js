@@ -98,6 +98,7 @@ for (let m = 0; m < produitEnrgDansLeLocaleStorage.length; m++){
     console.log(prixTotalDuPanier);
 }
 
+//declaration de la variable pr pouvoir y mettre la quantité  ds le panier
 let quantiteTotalDupanier = [];
 
 for (let a = 0; a < produitEnrgDansLeLocaleStorage.length; a++){
@@ -114,13 +115,13 @@ for (let a = 0; a < produitEnrgDansLeLocaleStorage.length; a++){
     const prixTotal = prixTotalDuPanier.reduce(reducer);
 
     console.log(prixTotal);
-
+//adddition des quantité qu'il ya ds le tableau de la variable "prixtotalcal" av la methode .reduce
     const reducere = (accumulator, currentValue) => accumulator + currentValue;
     const quantiteProduit = quantiteTotalDupanier.reduce(reducere);
 
     console.log(quantiteTotalDupanier);
 
-    //le code html du prix total à afficher
+    //le code html du prix total à afficher et quantité total
 
     const affichePrixHtml = `
     <div class="cart__price">
@@ -129,5 +130,38 @@ for (let a = 0; a < produitEnrgDansLeLocaleStorage.length; a++){
     
     `
 positionElement1.insertAdjacentHTML("beforeend", affichePrixHtml);
+//fin panier-------------------------------
+
+//-----------formulaire---------------------------------
 
 
+//selection du button envoyer le formulaire
+
+const envoieFormulaire = document.querySelector("#order");
+
+
+//addenveslistener-----
+
+envoieFormulaire.addEventListener("click", (e)=>{e.preventDefault();
+
+//recuperation des valeur du formulaire pour les mettre  dans le locale storage 
+localStorage.setItem("firstName", document.querySelector("#firstName").value);
+localStorage.setItem("lastName", document.querySelector("#lastName").value);
+localStorage.setItem("address", document.querySelector("#address").value);
+localStorage.setItem("city", document.querySelector("#city").value);
+localStorage.setItem("email", document.querySelector("#email").value);
+
+
+const Formulaire = {
+    prenom: localStorage.getItem('firstName'),
+    nom: localStorage.getItem('lastName'),
+    adresse: localStorage.getItem('address'),
+    ville: localStorage.getItem('city'),
+    email:localStorage.getItem('email'),   
+}
+console.log(Formulaire);
+
+
+
+
+})
