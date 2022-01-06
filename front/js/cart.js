@@ -144,24 +144,124 @@ const envoieFormulaire = document.querySelector("#order");
 
 envoieFormulaire.addEventListener("click", (e)=>{e.preventDefault();
 
-//recuperation des valeur du formulaire pour les mettre  dans le locale storage 
-localStorage.setItem("firstName", document.querySelector("#firstName").value);
-localStorage.setItem("lastName", document.querySelector("#lastName").value);
-localStorage.setItem("address", document.querySelector("#address").value);
-localStorage.setItem("city", document.querySelector("#city").value);
-localStorage.setItem("email", document.querySelector("#email").value);
+
+    //création def d'un class pr fabriquer l'objt ds lequel iront les values du formulaire
 
 
-const Formulaire = {
-    prenom: localStorage.getItem('firstName'),
-    nom: localStorage.getItem('lastName'),
-    adresse: localStorage.getItem('address'),
-    ville: localStorage.getItem('city'),
-    email:localStorage.getItem('email'),   
+    class Formulaire{
+        constructor (){
+            this.prenom = document.querySelector("#firstName").value;
+            this.nom = document.querySelector("#lastName").value;
+            this.address = document.querySelector("#address").value;
+            this.city = document.querySelector("#city").value;
+            this.email = document.querySelector("#email").value;
+        }
+    }
+
+//appel de l'instance de class formulaire pr creer l'obj formulaireValue
+
+const formulaireValues = new Formulaire();
+console.log(formulaireValues);
+console.log("formulaireValues")
+
+
+
+//-------gestion validation formulaire
+
+const regExPrenomNomCity = (value) => {
+    return/^[A-Za-z]{0,20}$/.test(value);
 }
-console.log(Formulaire);
+const regexEmail =  (value) =>{
+    return/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value);
+}
+
+const regexAdresse =  (value) =>{
+    return/^[A-Za-z0-9]{5,60}$/.test(value);
+}
+
+function prenomControle() {
+//---------controle de la validité du prenom  regex
+const lePrenom = formulaireValues.prenom;
+if(regExPrenomNomCity(lePrenom)){
+    console.log("ok");
+    return true;
+}else{
+    console.log("ko");
+    alert ('chiffre et les caractére speciaux non autorisé prénom 20 caractère possible');
+    return false;
+};
+}
+
+function nomControle() {
+    //---------controle de la validité du prenom  regex
+const nom = formulaireValues.nom;
+if(regExPrenomNomCity(nom)){
+    console.log("ok");
+    return true;
+}else{
+    console.log("ko");
+    alert ('chiffre et les caractére speciaux non autorisé prénom 20 caractère possible');
+    return false;
+};
+}
+
+function villeControle() {
+    //---------controle de la validité du prenom  regex
+const ville = formulaireValues.city;
+if(regExPrenomNomCity(ville)){
+    console.log("ok");
+    return true;
+}else{
+    console.log("ko");
+    alert ('chiffre et les caractére speciaux non autorisé prénom 20 caractère possible');
+    return false;
+};
+}
+function adresseControle() {
+    //---------controle de la validité du prenom  regex
+const adresse = formulaireValues.address;
+if(regexAdresse(adresse)){
+    console.log("ok");
+    return true;
+}else{
+    console.log("ko");
+    alert (" l'adresse ne doit contenir que des lettres et chiffre");
+    return false;
+};
+}
+
+function emailControle() {
+        //---------controle de la validité du prenom  regex
+const email = formulaireValues.email;
+ if(regexEmail(email)){
+     return true;
+console.log("ok")
+}else{
+console.log("ko")
+alert('Email non valide')
+return false;
+ };
+}
 
 
 
 
+if (prenomControle() && nomControle() && villeControle() && emailControle() && adresseControle()) {
+    //mettre l'obj ds "formulaire values" ds le local storage
+
+    localStorage.setItem("formulaireValues", JSON.stringify(formulaireValues));
+    console.log(prenomControle());
+}else{
+    console.log(prenomControle());
+    alert("veuillez bien remplir le formulaire");
+}
+
+
+
+//mettre la values du formulaire et mettre les pdt selectionnés ds un objt a envoyer vers le 
+const aEnvoyer = {
+    produitEnrgDansLeLocaleStorage, formulaireValues
+}
+
+console.log(aEnvoyer)
 })
