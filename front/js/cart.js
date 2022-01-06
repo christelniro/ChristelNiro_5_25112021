@@ -4,7 +4,7 @@
  //JSON sert a convertir les donnéees au format jspn qui sont ds le local storage
 console.log(produitEnrgDansLeLocaleStorage);
 
-//------------------------------------afffcihage pdt du panier
+//------------------------------------afffcihage pdt du panier-----------------------------------
 
 //selection de la classe ou je vais injincter le code html
 
@@ -51,9 +51,9 @@ positionElement1.innerHTML = panierVide;
     }
     }
 
-    //fin affichage pdt du panier------------------------------------------
+    //-----------------------fin affichage pdt du panier------------------------------------------
 
-    //-----gestion btn panier---
+    //------------------------gestion btn panier-----------------------------------------------------------
     //selection des ref du btn supprime
 
     let btn_supprimer = document.querySelectorAll(".deleteItem")
@@ -83,7 +83,7 @@ location.reload();
         })
     }
 
-     // Récupération du total des quantités----------------------
+     //----------------------- Récupération du total des quantités----------------------
 
 
      //declaration de la variable pr pouvoir y mettre les prix ds le panier
@@ -132,7 +132,7 @@ for (let a = 0; a < produitEnrgDansLeLocaleStorage.length; a++){
 positionElement1.insertAdjacentHTML("beforeend", affichePrixHtml);
 //fin panier-------------------------------
 
-//-----------formulaire---------------------------------
+//----------------------------------------------------formulaire---------------------------------
 
 
 //selection du button envoyer le formulaire
@@ -169,14 +169,14 @@ console.log("formulaireValues")
 //-------gestion validation formulaire
 
 const regExPrenomNomCity = (value) => {
-    return/^[A-Za-z]{0,20}$/.test(value);
+    return/^([A-Za-z]{0,20})?([-]{0,1})?([A-Za-z]{0,20})$/.test(value);
 }
-const regexEmail =  (value) =>{
+const regexEmail =  (value) => {
     return/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value);
-}
+ }
 
-const regexAdresse =  (value) =>{
-    return/^[A-Za-z0-9]{5,60}$/.test(value);
+const regexAdresse =  (value) => {
+    return/^[A-Za-z0-9\s]{5,60}$/.test(value);
 }
 
 function prenomControle() {
@@ -256,12 +256,18 @@ if (prenomControle() && nomControle() && villeControle() && emailControle() && a
     alert("veuillez bien remplir le formulaire");
 }
 
+//----------fin gestion validation du formulaire--------------------------
 
-
-//mettre la values du formulaire et mettre les pdt selectionnés ds un objt a envoyer vers le 
+//mettre la values du formulaire et mettre les pdt selectionnés ds un objt a envoyer vers le serveur
 const aEnvoyer = {
     produitEnrgDansLeLocaleStorage, formulaireValues
 }
 
 console.log(aEnvoyer)
-})
+
+
+
+
+
+});
+
