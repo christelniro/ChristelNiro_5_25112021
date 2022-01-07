@@ -265,9 +265,15 @@ const aEnvoyer = {
 
 console.log(aEnvoyer)
 
+// envoi de l'obj  "aenvoyer " vers le serveur
 
-
-
-
+const promise01 = fetch("http://localhost:3000/api/products/order", {
+method: "POST",
+body: JSON.stringify(aEnvoyer),
+headers: {
+    "Content-Type" : "application/json",   
+},
+});
+console.log(promise01)
 });
 
