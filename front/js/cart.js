@@ -267,13 +267,63 @@ console.log(aEnvoyer)
 
 // envoi de l'obj  "aenvoyer " vers le serveur
 
-const promise01 = fetch("http://localhost:3000/api/products/order", {
-method: "POST",
-body: JSON.stringify(aEnvoyer),
-headers: {
-    "Content-Type" : "application/json",   
-},
-});
-console.log(promise01)
+const contact = {
+    firstName: document.getElementById("firstName").value,
+    lastName: document.getElementById("lastName").value,
+    address: document.getElementById("address").value,
+    city: document.getElementById("city").value,
+    email: document.getElementById("email").value
+  };
+
+ let products = [];
+ for (product of produitEnrgDansLeLocaleStorage) {
+   products.push(product.idProduit);
+   
+ }
+
+ console.log(contact)
+ console.log(products)
+
+ // fetch url envoi des données au serveur 
+ const promise01 = fetch(`http://localhost:3000/api/products/order`, {
+     method: "POST",
+     // envoi de l'objet contact et de la variable products en "POST"
+     body: JSON.stringify({           contact,
+        products
+    }),
+     headers: {
+         "Content-Type": "application/json",
+     },
+ });
+
+ promise01.then(async (data) => {
+     try {
+
+
+         const contenu = await data.json();
+         // puis récupérer dans la réponse le numéro de commande "orderId"
+         console.log("yoyo", contenu)
+         orderId = contenu.orderId;
+         // constitution de l'objet "order" contenant les données contact products et l'orderId
+         const order = {
+             contact: contenu.contact,
+             products: contenu.products,
+             orderId: contenu.orderId
+         }
+         // envoi au localStorage des données 
+         localStorage.setItem("order", JSON.stringify(order));
+         localStorage.setItem("orderId", JSON.stringify(orderId));
+         // redirection de l'utilisateur vers la page confirmation.html
+         window.location.href = `./confirmation.html`;
+
+     } catch (e) {}
+ });
+
+
+
+
+
+
+
 });
 
