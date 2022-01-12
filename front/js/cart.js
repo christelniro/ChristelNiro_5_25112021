@@ -108,7 +108,19 @@ for (let a = 0; a < produitEnrgDansLeLocaleStorage.length; a++){
 
     console.log(quantiteTotalDupanier);
 }
-
+    document.querySelectorAll(".itemQuantity").forEach(quantiteProduit => {
+        quantiteProduit.addEventListener("change", (e) => {
+            Basket.changeQuantity({
+                quantity: parseInt(choixForm),
+                color: e.target.closest(".cart__item").dataset.color,
+                _id: e.target.closest(".cart__item").dataset.id
+            });
+            if (parseInt(e.target.value) == 0) {
+                e.target.closest(".cart__item").remove();
+            }
+            displayTotal();
+        });
+    })
 
 //adddition des prix qu'il ya ds le tableau de la variable "prixtotalcal" av la methode .reduce
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
