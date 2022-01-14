@@ -35,8 +35,9 @@ positionElement1.innerHTML = panierVide;
                     <p> € ${produitEnrgDansLeLocaleStorage[k].prixProduit}</p>
                   </div>
                   <div class="cart__item__content__settings">
-                  <p>Qté : ${produitEnrgDansLeLocaleStorage[k].quantiteProduit}</p>
-                      
+                  <button id="decrement" > - </button>
+                  <p id="number">Qté : ${produitEnrgDansLeLocaleStorage[k].quantiteProduit}</p>
+                  <button id="increment" > + </button>    
                     </div>
                     <div class="cart__item__content__settings__delete">
                       <button class="deleteItem"> Supprimer </button>
@@ -81,6 +82,44 @@ location.reload();
 
         })
     }
+
+let add = document.getElementById('increment');
+let remove = document.getElementById('decrement');
+
+let int = document.getElementById('number');
+let integer = 0;
+
+add.addEventListener('click', function(){
+integer += 1;
+int.innerHTML = integer;
+})
+remove.addEventListener('click', function(){
+    integer -= 1;
+    int.innerHTML = integer;
+    })
+
+// //button - et +
+
+// let buttonSupprimer = document.querySelectorAll(".button-moins")
+// console.log(buttonSupprimer);
+
+// for (let i = 0; i < buttonSupprimer.length; i++){
+//     buttonSupprimer[i].addEventListener("click" , (event) => {
+//         event.preventDefault();
+
+
+//         let id_button_supp = produitEnrgDansLeLocaleStorage[i].couleurProduit;
+//         console.log("id_button_supp");
+//         console.log(id_button_supp);
+
+//         produitEnrgDansLeLocaleStorage = produitEnrgDansLeLocaleStorage.filter(
+//             el => el.couleurProduit !== id_button_supp);
+//             console.log(produitEnrgDansLeLocaleStorage);
+        
+//             localStorage.setItem("produit", JSON.stringify(produitEnrgDansLeLocaleStorage));
+
+//     })
+// }
 
      //----------------------- Récupération du total des quantités----------------------
 
