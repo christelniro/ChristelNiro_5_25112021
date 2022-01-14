@@ -1,4 +1,3 @@
- 
  //décalration de la variable ds laquelle on met les keys et values
  let produitEnrgDansLeLocaleStorage = JSON.parse(localStorage.getItem("produit"));
  //JSON sert a convertir les donnéees au format jspn qui sont ds le local storage
@@ -338,4 +337,3 @@ const contact = {
 
 
 });
-
