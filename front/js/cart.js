@@ -64,13 +64,15 @@ positionElement1.innerHTML = panierVide;
         btn_supprimer[l].addEventListener("click" , (event) =>{
             event.preventDefault();
 //selection de l id du pdt qui va etre supprimer en cliquant sur le btn
-            let id_selectionner_supression = produitEnrgDansLeLocaleStorage[l].idProduit;
-            console.log("id_selectionner_supression");
-            console.log(id_selectionner_supression);
+            
+            let idDelete = produitEnrgDansLeLocaleStorage[l].idProduit;
+            let colorDelete = produitEnrgDansLeLocaleStorage[l].couleurProduit;
+
 //av la methode filtre je selectionne les élements à garder et je sup l élement pi le btn su^^àa été cliqué
-produitEnrgDansLeLocaleStorage = produitEnrgDansLeLocaleStorage.filter(
-    el => el.idProduit !== id_selectionner_supression);
-console.log(produitEnrgDansLeLocaleStorage);
+
+
+produitEnrgDansLeLocaleStorage = produitEnrgDansLeLocaleStorage.filter( 
+    el => el.idProduit !== idDelete || el.couleurProduit !== colorDelete );
 //envoi de la variable ds le local storage
 //la transformation en format JSON et l'envoyer ds la key pdt du localstorage
 localStorage.setItem("produit", JSON.stringify(produitEnrgDansLeLocaleStorage));
@@ -82,6 +84,7 @@ location.reload();
 
         })
     }
+// button incrément + et décrémenté -
 
 let add = document.getElementById('increment');
 let remove = document.getElementById('decrement');
@@ -98,28 +101,7 @@ remove.addEventListener('click', function(){
     int.innerHTML = integer;
     })
 
-// //button - et +
-
-// let buttonSupprimer = document.querySelectorAll(".button-moins")
-// console.log(buttonSupprimer);
-
-// for (let i = 0; i < buttonSupprimer.length; i++){
-//     buttonSupprimer[i].addEventListener("click" , (event) => {
-//         event.preventDefault();
-
-
-//         let id_button_supp = produitEnrgDansLeLocaleStorage[i].couleurProduit;
-//         console.log("id_button_supp");
-//         console.log(id_button_supp);
-
-//         produitEnrgDansLeLocaleStorage = produitEnrgDansLeLocaleStorage.filter(
-//             el => el.couleurProduit !== id_button_supp);
-//             console.log(produitEnrgDansLeLocaleStorage);
-        
-//             localStorage.setItem("produit", JSON.stringify(produitEnrgDansLeLocaleStorage));
-
-//     })
-// }
+//-----------------------------------------------------------------------------------
 
      //----------------------- Récupération du total des quantités----------------------
 
