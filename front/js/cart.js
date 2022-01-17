@@ -34,10 +34,10 @@ positionElement1.innerHTML = panierVide;
                     <p>${produitEnrgDansLeLocaleStorage[k].couleurProduit}</p>
                     <p> € ${produitEnrgDansLeLocaleStorage[k].prixProduit}</p>
                   </div>
-                  <div class="cart__item__content__settings">
-                  <button id="decrement" > - </button>
+                  <div class="cart__item__content__settings number">
+                  <div class="cart__item__content__settings__quantity">
                   <p id="number">Qté : ${produitEnrgDansLeLocaleStorage[k].quantiteProduit}</p>
-                  <button id="increment" > + </button>    
+                  <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${produitEnrgDansLeLocaleStorage[k].quantiteProduit}">
                     </div>
                     <div class="cart__item__content__settings__delete">
                       <button class="deleteItem"> Supprimer </button>
@@ -53,10 +53,9 @@ positionElement1.innerHTML = panierVide;
 
     //-----------------------fin affichage pdt du panier------------------------------------------
 
-    //------------------------gestion btn panier-----------------------------------------------------------
+    //------------------------gestion btn panier-----------------------------------------------------------   
     //selection des ref du btn supprime
-
-    let btn_supprimer = document.querySelectorAll(".deleteItem")
+    let btn_supprimer = document.querySelectorAll(".deleteItem");
     console.log(btn_supprimer);
 
 
@@ -64,18 +63,25 @@ positionElement1.innerHTML = panierVide;
         btn_supprimer[l].addEventListener("click" , (event) =>{
             event.preventDefault();
 //selection de l id du pdt qui va etre supprimer en cliquant sur le btn
-            
+
+            let Qdelete = produitEnrgDansLeLocaleStorage[l].quantiteProduit;
             let idDelete = produitEnrgDansLeLocaleStorage[l].idProduit;
-            let colorDelete = produitEnrgDansLeLocaleStorage[l].couleurProduit;
+           
+            
 
 //av la methode filtre je selectionne les élements à garder et je sup l élement pi le btn su^^àa été cliqué
 
 
 produitEnrgDansLeLocaleStorage = produitEnrgDansLeLocaleStorage.filter( 
-    el => el.idProduit !== idDelete || el.couleurProduit !== colorDelete );
+    el => el.idProduit !== idDelete || el.couleurProduit !== colorDelete ||el.quantiteProduit !== Qdelete );
+
 //envoi de la variable ds le local storage
 //la transformation en format JSON et l'envoyer ds la key pdt du localstorage
 localStorage.setItem("produit", JSON.stringify(produitEnrgDansLeLocaleStorage));
+
+
+//on supprime l'article du localStorage
+
 
 //Alerte produit supprimé et refresh
 alert("Ce produit a bien été supprimé du panier");
@@ -84,24 +90,9 @@ location.reload();
 
         })
     }
-// button incrément + et décrémenté -
 
-let add = document.getElementById('increment');
-let remove = document.getElementById('decrement');
 
-let int = document.getElementById('number');
-let integer = 0;
 
-add.addEventListener('click', function(){
-integer += 1;
-int.innerHTML = integer;
-})
-
-remove.addEventListener('click', function(){
-    integer -= 1;
-    int.innerHTML = integer;
-    })
-console.log(add);
 //-----------------------------------------------------------------------------------
 
      //----------------------- Récupération du total des quantités----------------------
@@ -129,19 +120,45 @@ for (let a = 0; a < produitEnrgDansLeLocaleStorage.length; a++){
 
     console.log(quantiteTotalDupanier);
 }
-    document.querySelectorAll(".itemQuantity").forEach(quantiteProduit => {
-        quantiteProduit.addEventListener("change", (e) => {
-            Basket.changeQuantity({
-                quantity: parseInt(choixForm),
-                color: e.target.closest(".cart__item").dataset.color,
-                _id: e.target.closest(".cart__item").dataset.id
-            });
-            if (parseInt(e.target.value) == 0) {
-                e.target.closest(".cart__item").remove();
-            }
-            displayTotal();
-        });
-    })
+//     document.querySelectorAll(".itemQuantity").forEach(quantiteProduit => {
+//         quantiteProduit.addEventListener("change", (e) => {
+//             Basket.changeQuantity({
+//                 quantity: parseInt(choixForm),
+//                 color: e.target.closest(".cart__item").dataset.color,
+//                 _id: e.target.closest(".cart__item").dataset.id
+//             });
+//             if (parseInt(e.target.value) == 0) {
+//                 e.target.closest(".cart__item").remove();
+//             }
+//             displayTotal();
+//         });
+//     })
+
+
+function modifyQtt() {
+    let qttModif = document.querySelectorAll(".itemQuantity");
+
+    for (let h = 0; h < qttModif.length; h++){
+        qttModif[h].addEventListener("change" , (event) => {
+            event.preventDefault();
+
+            //Selection de l'element à modifier en fonction de son id ET sa couleur
+            let quantityModif = produitEnrgDansLeLocaleStorage[h].quantiteProduit;
+            let qttModifValue = qttModif[h].valueAsNumber;
+            
+            const resultFind = produitEnrgDansLeLocaleStorage.find((el) => el.qttModifValue !== quantityModif);
+
+            resultFind.quantiteProduit = qttModifValue;
+            produitEnrgDansLeLocaleStorage[h].quantiteProduit = resultFind.quantiteProduit;
+
+            localStorage.setItem("produit", JSON.stringify(produitEnrgDansLeLocaleStorage));
+        
+            // refresh rapide
+            location.reload();
+        })
+    }
+}
+modifyQtt();
 
 //adddition des prix qu'il ya ds le tableau de la variable "prixtotalcal" av la methode .reduce
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
