@@ -54,42 +54,36 @@ positionElement1.innerHTML = panierVide;
     //-----------------------fin affichage pdt du panier------------------------------------------
 
     //------------------------gestion btn panier-----------------------------------------------------------   
-    //selection des ref du btn supprime
-    let btn_supprimer = document.querySelectorAll(".deleteItem");
-    console.log(btn_supprimer);
+   //selection des ref du btn supprime
+
+   let btn_supprimer = document.querySelectorAll(".deleteItem")
+   console.log(btn_supprimer);
 
 
-    for (let l = 0; l < btn_supprimer.length; l++){
-        btn_supprimer[l].addEventListener("click" , (event) =>{
-            event.preventDefault();
+   for (let l = 0; l < btn_supprimer.length; l++){
+       btn_supprimer[l].addEventListener("click" , (event) =>{
+           event.preventDefault();
 //selection de l id du pdt qui va etre supprimer en cliquant sur le btn
-
-            let Qdelete = produitEnrgDansLeLocaleStorage[l].quantiteProduit;
-            let idDelete = produitEnrgDansLeLocaleStorage[l].idProduit;
            
-            
+           let idDelete = produitEnrgDansLeLocaleStorage[l].idProduit;
+           let colorDelete = produitEnrgDansLeLocaleStorage[l].couleurProduit;
 
 //av la methode filtre je selectionne les élements à garder et je sup l élement pi le btn su^^àa été cliqué
 
 
 produitEnrgDansLeLocaleStorage = produitEnrgDansLeLocaleStorage.filter( 
-    el => el.idProduit !== idDelete || el.couleurProduit !== colorDelete ||el.quantiteProduit !== Qdelete );
-
+   el => el.idProduit !== idDelete || el.couleurProduit !== colorDelete );
 //envoi de la variable ds le local storage
 //la transformation en format JSON et l'envoyer ds la key pdt du localstorage
 localStorage.setItem("produit", JSON.stringify(produitEnrgDansLeLocaleStorage));
-
-
-//on supprime l'article du localStorage
-
 
 //Alerte produit supprimé et refresh
 alert("Ce produit a bien été supprimé du panier");
 location.reload();
 
 
-        })
-    }
+       })
+   }
 
 
 
