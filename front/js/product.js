@@ -119,27 +119,7 @@ window.location.href = "cart.html";
 
 }
 
-// //fonction ajouter un pdt sélectionné dans le local storage
-// const ajoutProduitLocalStorage = () => {
-//     //ajout dsd le tableau de l'obj ac les values choisi par l'utilisateur
-//     produitEnrgDansLeLocaleStorage.push(optionsProduit);
-//     //transformation en format JSON et envoie dans l'array 'produi' du local storage
-//     localStorage.setItem("produit", JSON.stringify(produitEnrgDansLeLocaleStorage));
-// };
 
-//  //s'il y a déja  des pdt dans le local storage 
-
-//  if (produitEnrgDansLeLocaleStorage){
-//    ajoutProduitLocalStorage();
-// popupConfirmation();
-//  }
-
-//  //si il n'y pas de pdt d'enrg dans le local storage
-//  else{
-//      produitEnrgDansLeLocaleStorage = [];
-//     ajoutProduitLocalStorage();
-//     popupConfirmation();
-//  }
 
  //Importation dans le local storage
     //Si le panier comporte déjà au moins 1 article

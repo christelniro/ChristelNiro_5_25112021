@@ -152,6 +152,7 @@ function modifyQtt() {
         })
     }
 }
+
 modifyQtt();
 
 //adddition des prix qu'il ya ds le tableau de la variable "prixtotalcal" av la methode .reduce
@@ -159,6 +160,7 @@ modifyQtt();
     const prixTotal = prixTotalDuPanier.reduce(reducer);
 
     console.log(prixTotal);
+    
 //adddition des quantité qu'il ya ds le tableau de la variable "prixtotalcal" av la methode .reduce
     const reducere = (accumulator, currentValue) => accumulator + currentValue;
     const quantiteProduit = quantiteTotalDupanier.reduce(reducere);
@@ -174,6 +176,35 @@ modifyQtt();
     
     `
 positionElement1.insertAdjacentHTML("beforeend", affichePrixHtml);
+
+function getTotals(){
+
+    // Récupération du total des quantités
+    let elemsQtt = document.getElementsByClassName('itemQuantity');
+    let myLength = elemsQtt.length,
+    totalQtt = 0;
+
+    for (var i = 0; i < myLength; ++i) {
+        totalQtt += elemsQtt[i].valueAsNumber;
+    }
+
+    let productTotalQuantity = document.getElementById('totalQuantity');
+    productTotalQuantity.innerHTML = totalQtt;
+    console.log(totalQtt);
+
+    // Récupération du prix total
+    totalPrice = 0;
+
+    for (var i = 0; i < myLength; ++i) {
+        totalPrice += (elemsQtt[i].valueAsNumber * produitEnrgDansLeLocaleStorage[i].prixProduit);
+    }
+
+    let productTotalPrice = document.getElementById('totalPrice');
+    productTotalPrice.innerHTML = totalPrice;
+    console.log(totalPrice);
+}
+getTotals();
+
 //fin panier-------------------------------
 
 //----------------------------------------------------formulaire---------------------------------
