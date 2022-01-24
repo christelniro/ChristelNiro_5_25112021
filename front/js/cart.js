@@ -207,7 +207,7 @@ getTotals();
 
 //fin panier-------------------------------
 
-//----------------------------------------------------formulaire---------------------------------
+//----------------------------------------------------formulaire------------------------------------------------------------
 
 
 //selection du button envoyer le formulaire
@@ -306,7 +306,8 @@ if(regexAdresse(adresse)){
 }
 
 function emailControle() {
-        //---------controle de la validité du prenom  regex
+      
+    //---------controle de la validité du prenom  regex
 const email = formulaireValues.email;
  if(regexEmail(email)){
      return true;
@@ -322,6 +323,7 @@ return false;
 
 
 if (prenomControle() && nomControle() && villeControle() && emailControle() && adresseControle()) {
+    
     //mettre l'obj ds "formulaire values" ds le local storage
 
     localStorage.setItem("formulaireValues", JSON.stringify(formulaireValues));
@@ -329,11 +331,13 @@ if (prenomControle() && nomControle() && villeControle() && emailControle() && a
 }else{
     console.log(prenomControle());
     alert("veuillez bien remplir le formulaire");
+    return false;
 }
 
 //----------fin gestion validation du formulaire--------------------------
 
 //mettre la values du formulaire et mettre les pdt selectionnés ds un objt a envoyer vers le serveur
+
 const aEnvoyer = {
     produitEnrgDansLeLocaleStorage, formulaireValues
 }
@@ -360,6 +364,7 @@ const contact = {
  console.log(products)
 
  // fetch url envoi des données au serveur 
+
  const promise01 = fetch(`http://localhost:3000/api/products/order`, {
      method: "POST",
      // envoi de l'objet contact et de la variable products en "POST"
@@ -367,6 +372,7 @@ const contact = {
         products
     }),
      headers: {
+        'Accept': 'application/json', 
          "Content-Type": "application/json",
      },
  });
@@ -377,8 +383,10 @@ const contact = {
 
          const contenu = await data.json();
          // puis récupérer dans la réponse le numéro de commande "orderId"
+
          console.log("yoyo", contenu)
          orderId = contenu.orderId;
+
          // constitution de l'objet "order" contenant les données contact products et l'orderId
          const order = {
              contact: contenu.contact,
@@ -386,18 +394,15 @@ const contact = {
              orderId: contenu.orderId
          }
          // envoi au localStorage des données 
+
          localStorage.setItem("order", JSON.stringify(order));
          localStorage.setItem("orderId", JSON.stringify(orderId));
+
          // redirection de l'utilisateur vers la page confirmation.html
+
          window.location.href = `./confirmation.html`;
 
-     } catch (e) {}
+     } catch (e) { alert ("Problème avec fetch : " + err.message);}
  });
-
-
-
-
-
-
 
 });
