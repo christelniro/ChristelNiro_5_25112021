@@ -1,9 +1,3 @@
-//  let productName = document.querySelector(".productName");
-//  console.log(productName)
-//  let photoApi = document.querySelector(".photoApi");
-//  console.log(photoApi)
-
-
 
 //recuperation des articles
 async function tableau(){
@@ -11,16 +5,18 @@ async function tableau(){
     return response.json();
 }
 tableau()
-.then(jsonData => console.log(jsonData))
+// .then(jsonData => console.log(jsonData))
 
 produitSection()
 
  // Répartition des données de l'API dans le DOM
+ 
  async function produitSection() {
     let result = await tableau ()
     .then(function (resultatApi){
         const articles = resultatApi;
         console.table(articles);
+        
         for (let article in articles) {
 
             // Insertion de l'élément "a"

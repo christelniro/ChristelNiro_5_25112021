@@ -64,8 +64,6 @@ addToCart(article);
 const idForm = document.querySelector('#addToCart');
 console.log(idForm);
 
-
-
 //selection du bouton ajouter l'article du panier
 const btn_envoyerPanier = document.querySelector('#addToCart')
 console.log(btn_envoyerPanier);
@@ -101,6 +99,8 @@ console.log(optionsProduit);
 
 
 //STOCKER LA RECUP DES VALEURS DU FORMULAIRE DS LE LS-----
+
+
  //declaration
 
  let produitEnrgDansLeLocaleStorage = JSON.parse(localStorage.getItem("produit"));
@@ -119,13 +119,12 @@ window.location.href = "cart.html";
 
 }
 
-
-
  //Importation dans le local storage
     //Si le panier comporte déjà au moins 1 article
    if (produitEnrgDansLeLocaleStorage) {
        const resultFind = produitEnrgDansLeLocaleStorage.find(
            (el) => el.idProduit === idProduct && el.couleurProduit === choixForm);
+           //Si le produit commandé est déjà dans le panier
            if(resultFind){
                let newQuantite=
                parseInt(optionsProduit.quantiteProduit) + parseInt(resultFind.quantiteProduit);
@@ -133,12 +132,13 @@ window.location.href = "cart.html";
                localStorage.setItem("produit", JSON.stringify(produitEnrgDansLeLocaleStorage));
                console.table(produitEnrgDansLeLocaleStorage);
                popupConfirmation();
-       
+      //Si le produit commandé n'est pas dans le panier 
    }else{
        produitEnrgDansLeLocaleStorage.push(optionsProduit);
        localStorage.setItem("produit", JSON.stringify(produitEnrgDansLeLocaleStorage));
        console.table(produitEnrgDansLeLocaleStorage);
        popupConfirmation();
+          //Si le panier est vide
    }} else {
        produitEnrgDansLeLocaleStorage = [];
        produitEnrgDansLeLocaleStorage.push(optionsProduit);

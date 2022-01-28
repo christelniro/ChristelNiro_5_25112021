@@ -1,14 +1,14 @@
  //décalration de la variable ds laquelle on met les keys et values
  let produitEnrgDansLeLocaleStorage = JSON.parse(localStorage.getItem("produit"));
  //JSON sert a convertir les donnéees au format jspn qui sont ds le local storage
-console.log(produitEnrgDansLeLocaleStorage);
+// console.log(produitEnrgDansLeLocaleStorage);
 
 //------------------------------------afffcihage pdt du panier-----------------------------------
 
 //selection de la classe ou je vais injincter le code html
 
 const positionElement1 = document.querySelector("#cart__items");
-console.log(positionElement1)
+// console.log(positionElement1)
 
 //si le panier est vide afficher panier vide
 
@@ -34,11 +34,13 @@ positionElement1.innerHTML = panierVide;
                     <p>${produitEnrgDansLeLocaleStorage[k].couleurProduit}</p>
                     <p> € ${produitEnrgDansLeLocaleStorage[k].prixProduit}</p>
                   </div>
-                  <div class="cart__item__content__settings number">
-                  <div class="cart__item__content__settings__quantity">
-                  <p id="number">Qté : ${produitEnrgDansLeLocaleStorage[k].quantiteProduit}</p>
-                  <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${produitEnrgDansLeLocaleStorage[k].quantiteProduit}">
+                  <div class="cart__item__content__settings">
+                    <div class="cart__item__content__settings__quantity">
+                     <p id="numbers" >Qté : ${produitEnrgDansLeLocaleStorage[k].quantiteProduit}</p>
+                     <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${produitEnrgDansLeLocaleStorage[k].quantiteProduit}">
                     </div>
+        
+                  </div>
                     <div class="cart__item__content__settings__delete">
                       <button class="deleteItem"> Supprimer </button>
                     </div>
@@ -85,8 +87,6 @@ location.reload();
        })
    }
 
-
-
 //-----------------------------------------------------------------------------------
 
      //----------------------- Récupération du total des quantités----------------------
@@ -114,21 +114,8 @@ for (let a = 0; a < produitEnrgDansLeLocaleStorage.length; a++){
 
     console.log(quantiteTotalDupanier);
 }
-//     document.querySelectorAll(".itemQuantity").forEach(quantiteProduit => {
-//         quantiteProduit.addEventListener("change", (e) => {
-//             Basket.changeQuantity({
-//                 quantity: parseInt(choixForm),
-//                 color: e.target.closest(".cart__item").dataset.color,
-//                 _id: e.target.closest(".cart__item").dataset.id
-//             });
-//             if (parseInt(e.target.value) == 0) {
-//                 e.target.closest(".cart__item").remove();
-//             }
-//             displayTotal();
-//         });
-//     })
 
-
+//le button input
 function modifyQtt() {
     let qttModif = document.querySelectorAll(".itemQuantity");
 
