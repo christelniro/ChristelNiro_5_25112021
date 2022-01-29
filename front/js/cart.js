@@ -12,112 +12,135 @@ const positionElement1 = document.querySelector("#cart__items");
 
 //si le panier est vide afficher panier vide
 
-if(produitEnrgDansLeLocaleStorage === null || produitEnrgDansLeLocaleStorage == 0){
-const panierVide = `<p> Votre panier est vide </p>`;
-positionElement1.innerHTML = panierVide;
+if (produitEnrgDansLeLocaleStorage === null || produitEnrgDansLeLocaleStorage == 0){
+    const panierVide = `<p> Votre panier est vide </p>`;
+    positionElement1.innerHTML = panierVide;
 } else { 
     //si panier pas vide mettre les article en local storage
     
     let structureProduitPanier = [];
 
-    for(k = 0; k < produitEnrgDansLeLocaleStorage.length; k++ ){
-        
-        structureProduitPanier = structureProduitPanier + `
-        
-                <div class="cart__item__img">
-<img src=${produitEnrgDansLeLocaleStorage[k].imgProduit} alt=${produitEnrgDansLeLocaleStorage[k].imgProduit.altImgProduit}>
-                </div>
-                </div>
-                <div class="cart__item__content">
-                  <div class="cart__item__content__description">
-                    <h2>Nom du produit ${produitEnrgDansLeLocaleStorage[k].nomProduit}</h2>
-                    <p>${produitEnrgDansLeLocaleStorage[k].couleurProduit}</p>
-                    <p> € ${produitEnrgDansLeLocaleStorage[k].prixProduit}</p>
-                  </div>
-                  <div class="cart__item__content__settings">
-                    <div class="cart__item__content__settings__quantity">
-                     <p id="numbers" >Qté : ${produitEnrgDansLeLocaleStorage[k].quantiteProduit}</p>
-                     <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${produitEnrgDansLeLocaleStorage[k].quantiteProduit}">
-                    </div>
-        
-                  </div>
-                    <div class="cart__item__content__settings__delete">
-                      <button class="deleteItem"> Supprimer </button>
-                    </div>
-                  </div>
-                </div>
-        `;}
-        if (k == produitEnrgDansLeLocaleStorage.length){
-            //injection html dans la page panier
-        positionElement1.innerHTML = structureProduitPanier;
+
+    async function getPrice(){
+        try {
+            const produit = fetch(`http://localhost:3000/api/products`)
+            const response = await produit;
+            const jsonResponse = await response.json();
+            afficherProduits(jsonResponse)
+            
+            getTotalPrice()
+            modifyQtt()
+            supprimerProduit()
+        } catch (error) {
+            console.error(error);
+        }
     }
+    getPrice();
+
+    function afficherProduits(produitsApi) { 
+        console.table(produitsApi);
+        
+        const produits = produitEnrgDansLeLocaleStorage.map((produit) => {
+            const produitFiltre = produitsApi.filter(produitApi => produitApi._id === produit.idProduit);
+            console.log(produitFiltre[0].price);
+            const price = produitFiltre[0].price;
+            return `
+            <article class="cart__item">
+                <div>
+                    <div class="cart__item__img">
+                        <img src=${produit.imgProduit} alt=${produit.imgProduit.altImgProduit}>
+                    </div>
+                    <div class="cart__item__content">
+                        <div class="cart__item__content__description">
+                            <h2>Nom du produit ${produit.nomProduit}</h2>
+                            <p>${produit.couleurProduit}</p>
+                            <p id="product_price_${price}" class="product_price"> ${price} €</p>
+                        </div>
+                        <div class="cart__item__content__settings">
+                            <div class="cart__item__content__settings__quantity">
+                                <p id="numbers" >Qté : ${produit.quantiteProduit}</p>
+                                <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${produit.quantiteProduit}">
+                            </div>
+                        </div>
+                        <div class="cart__item__content__settings__delete">
+                            <button class="deleteItem"> Supprimer </button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            `
+        });
+        positionElement1.innerHTML = produits;
     }
+
+
+    }
+//recup du prix
+
 
     //-----------------------fin affichage pdt du panier------------------------------------------
 
     //------------------------gestion btn panier-----------------------------------------------------------   
    //selection des ref du btn supprime
+function supprimerProduit() {
+    let btn_supprimer = document.querySelectorAll(".deleteItem")
+   
+    for (let l = 0; l < btn_supprimer.length; l++){
+        btn_supprimer[l].addEventListener("click" , (event) =>{
+            event.preventDefault();
+ 
+         //selection de l id du pdt qui va etre supprimer en cliquant sur le btn
+            console.log(btn_supprimer);
+ 
+            let idDelete = produitEnrgDansLeLocaleStorage[l].idProduit;
+            let colorDelete = produitEnrgDansLeLocaleStorage[l].couleurProduit;
+ 
+ //av la methode filtre je selectionne les élements à garder et je sup l élement pi le btn su^^àa été cliqué
+ 
+ 
+     produitEnrgDansLeLocaleStorage = produitEnrgDansLeLocaleStorage.filter( 
+     el => el.idProduit !== idDelete || el.couleurProduit !== colorDelete );
+     
+         //envoi de la variable ds le local storage
+         //la transformation en format JSON et l'envoyer ds la key pdt du localstorage
+         localStorage.setItem("produit", JSON.stringify(produitEnrgDansLeLocaleStorage));
+ 
+         //Alerte produit supprimé et refresh
+         alert("Ce produit a bien été supprimé du panier");
+         location.reload();
+     })
+    }
+}
 
-   let btn_supprimer = document.querySelectorAll(".deleteItem")
-   console.log(btn_supprimer);
-
-
-   for (let l = 0; l < btn_supprimer.length; l++){
-       btn_supprimer[l].addEventListener("click" , (event) =>{
-           event.preventDefault();
-//selection de l id du pdt qui va etre supprimer en cliquant sur le btn
-           
-           let idDelete = produitEnrgDansLeLocaleStorage[l].idProduit;
-           let colorDelete = produitEnrgDansLeLocaleStorage[l].couleurProduit;
-
-//av la methode filtre je selectionne les élements à garder et je sup l élement pi le btn su^^àa été cliqué
-
-
-produitEnrgDansLeLocaleStorage = produitEnrgDansLeLocaleStorage.filter( 
-   el => el.idProduit !== idDelete || el.couleurProduit !== colorDelete );
-//envoi de la variable ds le local storage
-//la transformation en format JSON et l'envoyer ds la key pdt du localstorage
-localStorage.setItem("produit", JSON.stringify(produitEnrgDansLeLocaleStorage));
-
-//Alerte produit supprimé et refresh
-alert("Ce produit a bien été supprimé du panier");
-location.reload();
-
-
-       })
-   }
 
 //-----------------------------------------------------------------------------------
 
-     //----------------------- Récupération du total des quantités----------------------
+//----------------------- Récupération du total des quantités----------------------
 
+function getTotalPrice() {
+    const currentProductDansPanier = document.querySelectorAll('.product_price');
+    let qttModif = document.querySelectorAll(".itemQuantity");
+    console.log(qttModif)
+    const tableauPrix = [...currentProductDansPanier].map(produit => parseInt(produit.innerText));
+    const tableauQuantite = [...qttModif].map(quantite => parseInt(quantite.value));
 
-     //declaration de la variable pr pouvoir y mettre les prix ds le panier
+    const reducer = (accumulator, currentValue) =>  accumulator + currentValue;
+    let prixTotal = tableauPrix.reduce(reducer);
+    const quantiteTotal = tableauQuantite.reduce(reducer);
+    prixTotal *= quantiteTotal;
 
-let prixTotalDuPanier = [];
-
-for (let m = 0; m < produitEnrgDansLeLocaleStorage.length; m++){
-    let prixProduitDansLePanier = produitEnrgDansLeLocaleStorage[m].prixProduit;
-// 
-    prixTotalDuPanier.push(prixProduitDansLePanier)
-
-    console.log(prixTotalDuPanier);
-}
-
-//declaration de la variable pr pouvoir y mettre la quantité  ds le panier
-let quantiteTotalDupanier = [];
-
-for (let a = 0; a < produitEnrgDansLeLocaleStorage.length; a++){
-    let quantiteTotalDanslepanier = produitEnrgDansLeLocaleStorage[a].quantiteProduit;
-
-   quantiteTotalDupanier.push(quantiteTotalDanslepanier)
-
-    console.log(quantiteTotalDupanier);
+    const affichePrixHtml = `
+        <div class="cart__price">
+            <p>Total (<span id="totalQuantity">${quantiteTotal}</span> articles) : <span id="totalPrice">${prixTotal}</span> €</p>
+        </div>
+    `;
+    positionElement1.insertAdjacentHTML("beforeend", affichePrixHtml);
 }
 
 //le button input
 function modifyQtt() {
     let qttModif = document.querySelectorAll(".itemQuantity");
+    console.log(qttModif);
 
     for (let h = 0; h < qttModif.length; h++){
         qttModif[h].addEventListener("change" , (event) => {
@@ -139,30 +162,8 @@ function modifyQtt() {
         })
     }
 }
+//le code html du prix total à afficher et quantité total
 
-modifyQtt();
-
-//adddition des prix qu'il ya ds le tableau de la variable "prixtotalcal" av la methode .reduce
-    const reducer = (accumulator, currentValue) => accumulator + currentValue;
-    const prixTotal = prixTotalDuPanier.reduce(reducer);
-
-    console.log(prixTotal);
-    
-//adddition des quantité qu'il ya ds le tableau de la variable "prixtotalcal" av la methode .reduce
-    const reducere = (accumulator, currentValue) => accumulator + currentValue;
-    const quantiteProduit = quantiteTotalDupanier.reduce(reducere);
-
-    console.log(quantiteTotalDupanier);
-
-    //le code html du prix total à afficher et quantité total
-
-    const affichePrixHtml = `
-    <div class="cart__price">
-              <p>Total (<span id="totalQuantity">${quantiteProduit}</span> articles) : <span id="totalPrice">${prixTotal}</span> €</p>
-            </div>
-    
-    `
-positionElement1.insertAdjacentHTML("beforeend", affichePrixHtml);
 
 function getTotals(){
 
@@ -189,8 +190,8 @@ function getTotals(){
     let productTotalPrice = document.getElementById('totalPrice');
     productTotalPrice.innerHTML = totalPrice;
     console.log(totalPrice);
-}
-getTotals();
+ }
+// getTotals();
 
 //fin panier-------------------------------
 

@@ -86,13 +86,13 @@ let optionsProduit = {
     couleurProduit: choixForm,
     quantiteProduit: Number(ChoixForm),
     nomProduit: article.name,
-    prixProduit: (article.price * ChoixForm),
+    
     descriptionProduit: article.description,
     imgProduit: article.imageUrl,
     altImgProduit: article.altTxt,
 }
 
-console.log(optionsProduit);
+console.log("christel", optionsProduit);
 
 
 //----------LOCAL STORAGE----
@@ -136,14 +136,14 @@ window.location.href = "cart.html";
    }else{
        produitEnrgDansLeLocaleStorage.push(optionsProduit);
        localStorage.setItem("produit", JSON.stringify(produitEnrgDansLeLocaleStorage));
-       console.table(produitEnrgDansLeLocaleStorage);
+       console.log("ici" , produitEnrgDansLeLocaleStorage);
        popupConfirmation();
           //Si le panier est vide
    }} else {
        produitEnrgDansLeLocaleStorage = [];
        produitEnrgDansLeLocaleStorage.push(optionsProduit);
        localStorage.setItem("produit", JSON.stringify(produitEnrgDansLeLocaleStorage));
-       console.table(produitEnrgDansLeLocaleStorage);
+       console.log("la" , produitEnrgDansLeLocaleStorage);
        popupConfirmation();
    }
 });
