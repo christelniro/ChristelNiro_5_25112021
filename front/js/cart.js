@@ -1,14 +1,14 @@
 //décalration de la variable ds laquelle on met les keys et values
 let produitEnrgDansLeLocaleStorage = JSON.parse(localStorage.getItem("produit"));
 //JSON sert a convertir les donnéees au format jspn qui sont ds le local storage
-// console.log(produitEnrgDansLeLocaleStorage);
+
 
 //------------------------------------afffcihage pdt du panier-----------------------------------
 
 //selection de la classe ou je vais injincter le code html
 
 const positionElement1 = document.querySelector("#cart__items");
-// console.log(positionElement1)
+
 
 //si le panier est vide afficher panier vide
 
@@ -42,7 +42,7 @@ if (produitEnrgDansLeLocaleStorage === null || produitEnrgDansLeLocaleStorage ==
 
         const produits = produitEnrgDansLeLocaleStorage.map((produit) => {
             const produitFiltre = produitsApi.filter(produitApi => produitApi._id === produit.idProduit);
-            console.log(produitFiltre[0].price);
+
             const price = produitFiltre[0].price;
             return `
             <article class="cart__item">
@@ -90,7 +90,7 @@ function supprimerProduit() {
             event.preventDefault();
 
             //selection de l id du pdt qui va etre supprimer en cliquant sur le btn
-            console.log(btn_supprimer);
+
 
             let idDelete = produitEnrgDansLeLocaleStorage[l].idProduit;
             let colorDelete = produitEnrgDansLeLocaleStorage[l].couleurProduit;
@@ -120,7 +120,7 @@ function supprimerProduit() {
 function getTotalPrice() {
     const currentProductDansPanier = document.querySelectorAll('.product_price');
     let qttModif = document.querySelectorAll(".itemQuantity");
-    console.log(qttModif)
+
     const tableauPrix = [...currentProductDansPanier].map(produit => parseInt(produit.innerText));
     const tableauQuantite = [...qttModif].map(quantite => parseInt(quantite.value));
 
@@ -140,7 +140,7 @@ function getTotalPrice() {
 //le button input
 function modifyQtt() {
     let qttModif = document.querySelectorAll(".itemQuantity");
-    console.log(qttModif);
+
 
     for (let h = 0; h < qttModif.length; h++) {
         qttModif[h].addEventListener("change", (event) => {
@@ -178,7 +178,7 @@ function getTotals() {
 
     let productTotalQuantity = document.getElementById('totalQuantity');
     productTotalQuantity.innerHTML = totalQtt;
-    console.log(totalQtt);
+
 
     // Récupération du prix total
     totalPrice = 0;
@@ -189,7 +189,7 @@ function getTotals() {
 
     let productTotalPrice = document.getElementById('totalPrice');
     productTotalPrice.innerHTML = totalPrice;
-    console.log(totalPrice);
+
 }
 // getTotals();
 
@@ -225,8 +225,7 @@ envoieFormulaire.addEventListener("click", (e) => {
     //appel de l'instance de class formulaire pr creer l'obj formulaireValue
 
     const formulaireValues = new Formulaire();
-    console.log(formulaireValues);
-    console.log("formulaireValues")
+
 
 
 
@@ -250,10 +249,10 @@ envoieFormulaire.addEventListener("click", (e) => {
 
         const lePrenom = formulaireValues.prenom;
         if (regExPrenomNomCity(lePrenom)) {
-            console.log("ok");
+
             return true;
         } else {
-            console.log("ko");
+
             document.getElementById('firstNameErrorMsg').innerHTML = "Veuillez entrez un prénom valide";
             return false;
         };
@@ -264,10 +263,10 @@ envoieFormulaire.addEventListener("click", (e) => {
 
         const nom = formulaireValues.nom;
         if (regExPrenomNomCity(nom)) {
-            console.log("ok");
+
             return true;
         } else {
-            console.log("ko");
+
             document.getElementById('lastNameErrorMsg').innerHTML = "Veuillez entrez un nom valide";
             return false;
         };
@@ -278,10 +277,10 @@ envoieFormulaire.addEventListener("click", (e) => {
 
         const ville = formulaireValues.city;
         if (regExPrenomNomCity(ville)) {
-            console.log("ok");
+
             return true;
         } else {
-            console.log("ko");
+
             document.getElementById('cityErrorMsg').innerHTML = "Veuillez entrez un nom ville valide";
             return false;
         };
@@ -291,10 +290,10 @@ envoieFormulaire.addEventListener("click", (e) => {
 
         const adresse = formulaireValues.address;
         if (regexAdresse(adresse)) {
-            console.log("ok");
+
             return true;
         } else {
-            console.log("ko");
+
             document.getElementById('addressErrorMsg').innerHTML = "Veuillez entrez une adresse valide";
             return false;
         };
@@ -307,9 +306,9 @@ envoieFormulaire.addEventListener("click", (e) => {
         const email = formulaireValues.email;
         if (regexEmail(email)) {
             return true;
-            console.log("ok")
+
         } else {
-            console.log("ko")
+
             document.getElementById('emailErrorMsg').innerHTML = "Veuillez entrez un email valide";
             return false;
         };
@@ -323,9 +322,9 @@ envoieFormulaire.addEventListener("click", (e) => {
         //mettre l'obj ds "formulaire values" ds le local storage
 
         localStorage.setItem("formulaireValues", JSON.stringify(formulaireValues));
-        console.log(prenomControle());
+
     } else {
-        console.log(prenomControle());
+
 
         return false;
     }
@@ -338,7 +337,7 @@ envoieFormulaire.addEventListener("click", (e) => {
         produitEnrgDansLeLocaleStorage, formulaireValues
     }
 
-    console.log(aEnvoyer)
+
 
     // envoi de l'obj  "aenvoyer " vers le serveur
 
@@ -356,8 +355,7 @@ envoieFormulaire.addEventListener("click", (e) => {
 
     }
 
-    console.log(contact)
-    console.log(products)
+
 
     // fetch url envoi des données au serveur 
 
@@ -381,7 +379,7 @@ envoieFormulaire.addEventListener("click", (e) => {
             const contenu = await data.json();
             // puis récupérer dans la réponse le numéro de commande "orderId"
 
-            console.log("yoyo", contenu)
+
             orderId = contenu.orderId;
 
             // constitution de l'objet "order" contenant les données contact products et l'orderId

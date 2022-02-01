@@ -5,7 +5,7 @@ async function tableau() {
     return response.json();
 }
 tableau()
-// .then(jsonData => console.log(jsonData))
+
 
 produitSection()
 
@@ -15,7 +15,7 @@ async function produitSection() {
     let result = await tableau()
         .then(function (resultatApi) {
             const articles = resultatApi;
-            console.table(articles);
+
 
             for (let article in articles) {
 

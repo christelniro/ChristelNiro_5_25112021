@@ -3,7 +3,7 @@
 let str = window.location.href;
 let url = new URL(str);
 let idProduct = url.searchParams.get("id");
-console.log(idProduct);
+
 let article = "";
 
 const colorPicked = document.querySelector("#colors");
@@ -47,7 +47,7 @@ function getPost(article) {
     productDescription.innerHTML = article.description;
     //choix couleur
     for (let colors of article.colors) {
-        console.table(colors);
+
         let productColors = document.createElement("Option")
         document.querySelector('#colors').appendChild(productColors);
         productColors.value = colors;
@@ -62,11 +62,11 @@ function getPost(article) {
 
 //selection de l'id du formulaire
 const idForm = document.querySelector('#addToCart');
-console.log(idForm);
+
 
 //selection du bouton ajouter l'article du panier
 const btn_envoyerPanier = document.querySelector('#addToCart')
-console.log(btn_envoyerPanier);
+
 
 //ecouter le bouton et envoyer le panier
 btn_envoyerPanier.addEventListener("click", (event) => {
@@ -75,10 +75,6 @@ btn_envoyerPanier.addEventListener("click", (event) => {
     //choix de l'utulisateur
     const choixForm = colorPicked.value;
     const ChoixForm = quantityPicked.value;
-
-
-    console.log(ChoixForm);
-
 
     //recuperer des valeurs du formulaire
     let optionsProduit = {
@@ -92,7 +88,7 @@ btn_envoyerPanier.addEventListener("click", (event) => {
         altImgProduit: article.altTxt,
     }
 
-    console.log("christel", optionsProduit);
+
 
 
     //----------LOCAL STORAGE----
@@ -105,7 +101,7 @@ btn_envoyerPanier.addEventListener("click", (event) => {
 
     let produitEnrgDansLeLocaleStorage = JSON.parse(localStorage.getItem("produit"));
     //Pour convertir les données au format json quis ont dans le local storage en obj js
-    console.log(produitEnrgDansLeLocaleStorage);
+
 
 
     //fonction fenetre popup
@@ -130,13 +126,13 @@ btn_envoyerPanier.addEventListener("click", (event) => {
                 parseInt(optionsProduit.quantiteProduit) + parseInt(resultFind.quantiteProduit);
             resultFind.quantiteProduit = newQuantite;
             localStorage.setItem("produit", JSON.stringify(produitEnrgDansLeLocaleStorage));
-            console.table(produitEnrgDansLeLocaleStorage);
+
             popupConfirmation();
             //Si le produit commandé n'est pas dans le panier 
         } else {
             produitEnrgDansLeLocaleStorage.push(optionsProduit);
             localStorage.setItem("produit", JSON.stringify(produitEnrgDansLeLocaleStorage));
-            console.log("ici", produitEnrgDansLeLocaleStorage);
+
             popupConfirmation();
             //Si le panier est vide
         }
@@ -144,7 +140,7 @@ btn_envoyerPanier.addEventListener("click", (event) => {
         produitEnrgDansLeLocaleStorage = [];
         produitEnrgDansLeLocaleStorage.push(optionsProduit);
         localStorage.setItem("produit", JSON.stringify(produitEnrgDansLeLocaleStorage));
-        console.log("la", produitEnrgDansLeLocaleStorage);
+
         popupConfirmation();
     }
 });
