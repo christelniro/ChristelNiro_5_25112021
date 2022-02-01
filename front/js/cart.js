@@ -390,14 +390,11 @@ envoieFormulaire.addEventListener("click", (e) => {
                 products: contenu.products,
                 orderId: contenu.orderId
             }
-            // envoi au localStorage des données 
 
-            localStorage.setItem("order", JSON.stringify(order));
-            localStorage.setItem("orderId", JSON.stringify(orderId));
 
             // redirection de l'utilisateur vers la page confirmation.html
 
-            window.location.href = `./confirmation.html`;
+            window.location.href = `./confirmation.html?orderId=${orderId}`;
 
         } catch (e) { alert("Problème avec fetch : " + err.message); }
     });
