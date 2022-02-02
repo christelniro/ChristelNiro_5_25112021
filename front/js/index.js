@@ -5,8 +5,6 @@ async function tableau() {
     return response.json();
 }
 tableau()
-
-
 produitSection()
 
 // Répartition des données de l'API dans le DOM

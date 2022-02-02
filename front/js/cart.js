@@ -2,13 +2,11 @@
 let produitEnrgDansLeLocaleStorage = JSON.parse(localStorage.getItem("produit"));
 //JSON sert a convertir les donnéees au format jspn qui sont ds le local storage
 
-
 //------------------------------------afffcihage pdt du panier-----------------------------------
 
 //selection de la classe ou je vais injincter le code html
 
 const positionElement1 = document.querySelector("#cart__items");
-
 
 //si le panier est vide afficher panier vide
 
@@ -37,8 +35,8 @@ if (produitEnrgDansLeLocaleStorage === null || produitEnrgDansLeLocaleStorage ==
     }
     getPrice();
 
+
     function afficherProduits(produitsApi) {
-        console.table(produitsApi);
 
         const produits = produitEnrgDansLeLocaleStorage.map((produit) => {
             const produitFiltre = produitsApi.filter(produitApi => produitApi._id === produit.idProduit);
@@ -72,15 +70,11 @@ if (produitEnrgDansLeLocaleStorage === null || produitEnrgDansLeLocaleStorage ==
         });
         positionElement1.innerHTML = produits;
     }
-
-
 }
-//recup du prix
 
+//--------------------------------------------fin affichage pdt du panier------------------------------------------
 
-//-----------------------fin affichage pdt du panier------------------------------------------
-
-//------------------------gestion btn panier-----------------------------------------------------------   
+//-------------------------------------gestion btn panier-----------------------------------------------------------   
 //selection des ref du btn supprime
 function supprimerProduit() {
     let btn_supprimer = document.querySelectorAll(".deleteItem")
@@ -112,18 +106,19 @@ function supprimerProduit() {
     }
 }
 
+//---------------------------------fin gestion btn panier--------------------------------------------------
 
-//-----------------------------------------------------------------------------------
-
-//----------------------- Récupération du total des quantités----------------------
+//--------------------------------------------------------Récupération du total des quantités----------------------
 
 function getTotalPrice() {
     const currentProductDansPanier = document.querySelectorAll('.product_price');
     let qttModif = document.querySelectorAll(".itemQuantity");
 
+    // recuperation des prix des produit qui sont dans le panier
     const tableauPrix = [...currentProductDansPanier].map(produit => parseInt(produit.innerText));
     const tableauQuantite = [...qttModif].map(quantite => parseInt(quantite.value));
 
+    // calcule des totaux  quantité * prixdu produit
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
     let prixTotal = tableauPrix.reduce(reducer);
     const quantiteTotal = tableauQuantite.reduce(reducer);
@@ -162,38 +157,9 @@ function modifyQtt() {
         })
     }
 }
-//le code html du prix total à afficher et quantité total
 
 
-function getTotals() {
-
-    // Récupération du total des quantités
-    let elemsQtt = document.getElementsByClassName('itemQuantity');
-    let myLength = elemsQtt.length,
-        totalQtt = 0;
-
-    for (var i = 0; i < myLength; ++i) {
-        totalQtt += elemsQtt[i].valueAsNumber;
-    }
-
-    let productTotalQuantity = document.getElementById('totalQuantity');
-    productTotalQuantity.innerHTML = totalQtt;
-
-
-    // Récupération du prix total
-    totalPrice = 0;
-
-    for (var i = 0; i < myLength; ++i) {
-        totalPrice += (elemsQtt[i].valueAsNumber * produitEnrgDansLeLocaleStorage[i].prixProduit);
-    }
-
-    let productTotalPrice = document.getElementById('totalPrice');
-    productTotalPrice.innerHTML = totalPrice;
-
-}
-// getTotals();
-
-//fin panier-------------------------------
+//-----------------------------------------------------fin panier-------------------------------
 
 //----------------------------------------------------formulaire------------------------------------------------------------
 
@@ -226,9 +192,6 @@ envoieFormulaire.addEventListener("click", (e) => {
 
     const formulaireValues = new Formulaire();
 
-
-
-
     //-------gestion validation formulaire
 
     const regExPrenomNomCity = (value) => {
@@ -241,8 +204,6 @@ envoieFormulaire.addEventListener("click", (e) => {
     const regexAdresse = (value) => {
         return /^[A-Za-z0-9\s]{5,60}$/.test(value);
     }
-
-
 
     //---------controle de la validité du prenom  regex
     function prenomControle() {
@@ -314,9 +275,6 @@ envoieFormulaire.addEventListener("click", (e) => {
         };
     }
 
-
-
-
     if (prenomControle() && nomControle() && villeControle() && emailControle() && adresseControle()) {
 
         //mettre l'obj ds "formulaire values" ds le local storage
@@ -337,8 +295,6 @@ envoieFormulaire.addEventListener("click", (e) => {
         produitEnrgDansLeLocaleStorage, formulaireValues
     }
 
-
-
     // envoi de l'obj  "aenvoyer " vers le serveur
 
     const contact = {
@@ -354,8 +310,6 @@ envoieFormulaire.addEventListener("click", (e) => {
         products.push(product.idProduit);
 
     }
-
-
 
     // fetch url envoi des données au serveur 
 

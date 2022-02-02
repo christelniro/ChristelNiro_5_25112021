@@ -56,9 +56,7 @@ function getPost(article) {
     addToCart(article);
 }
 
-
-//--------------BOUTTON PANIER ----------------------
-
+//-----------------------------------------------------------BOUTTON PANIER---------------------------------------------
 
 //selection de l'id du formulaire
 const idForm = document.querySelector('#addToCart');
@@ -88,21 +86,16 @@ btn_envoyerPanier.addEventListener("click", (event) => {
         altImgProduit: article.altTxt,
     }
 
+    //-----------------------------------------------------LOCAL STORAGE---------------------------------------------------
 
 
-
-    //----------LOCAL STORAGE----
-
-
-    //STOCKER LA RECUP DES VALEURS DU FORMULAIRE DS LE LS-----
+    //--------------------------------STOCKER LA RECUP DES VALEURS DU FORMULAIRE DS LE LS-------------------------------
 
 
     //declaration
 
     let produitEnrgDansLeLocaleStorage = JSON.parse(localStorage.getItem("produit"));
-    //Pour convertir les données au format json quis ont dans le local storage en obj js
-
-
+    //Pour convertir les données au format json qui sont dans le local storage en obj js
 
     //fonction fenetre popup
     const popupConfirmation = () => {
